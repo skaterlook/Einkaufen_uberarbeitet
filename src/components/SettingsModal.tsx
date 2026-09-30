@@ -9,11 +9,11 @@ interface SettingsModalProps {
 
 export function SettingsModal({ userProfile, onSave, onClose }: SettingsModalProps) {
   const [name, setName] = useState(userProfile?.name || '');
-  const [age, setAge] = useState(userProfile?.age || '');
-  const [gender, setGender] = useState(userProfile?.gender || 'other');
-  const [weight, setWeight] = useState(userProfile?.weight || '');
-  const [height, setHeight] = useState(userProfile?.height || '');
-  const [activityLevel, setActivityLevel] = useState(userProfile?.activityLevel || 'moderate');
+  const [age, setAge] = useState(userProfile?.age?.toString() || '');
+  const [gender, setGender] = useState<'male' | 'female' | 'other'>(userProfile?.gender || 'other');
+  const [weight, setWeight] = useState(userProfile?.weight?.toString() || '');
+  const [height, setHeight] = useState(userProfile?.height?.toString() || '');
+  const [activityLevel, setActivityLevel] = useState<'sedentary' | 'light' | 'moderate' | 'active' | 'very_active'>(userProfile?.activityLevel || 'moderate');
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>(userProfile?.dietaryPreferences || []);
 
   const dietaryOptions = ['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 'low-carb', 'high-protein'];
@@ -30,10 +30,10 @@ export function SettingsModal({ userProfile, onSave, onClose }: SettingsModalPro
     const profile: UserProfile = {
       name,
       age: age ? parseInt(age) : undefined,
-      gender: gender as any,
+      gender,
       weight: weight ? parseFloat(weight) : undefined,
       height: height ? parseFloat(height) : undefined,
-      activityLevel: activityLevel as any,
+      activityLevel,
       dietaryPreferences,
     };
     onSave(profile);
@@ -83,7 +83,7 @@ export function SettingsModal({ userProfile, onSave, onClose }: SettingsModalPro
                   <select
                     className="input"
                     value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    onChange={(e) => setGender(e.target.value as 'male' | 'female' | 'other')}
                   >
                     <option value="male">Männlich</option>
                     <option value="female">Weiblich</option>
@@ -122,7 +122,7 @@ export function SettingsModal({ userProfile, onSave, onClose }: SettingsModalPro
             <select
               className="input"
               value={activityLevel}
-              onChange={(e) => setActivityLevel(e.target.value)}
+              onChange={(e) => setActivityLevel(e.target.value as 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active')}
             >
               <option value="sedentary">Wenig aktiv (Bürojob)</option>
               <option value="light">Leicht aktiv (1-3x Sport)</option>

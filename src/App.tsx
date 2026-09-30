@@ -14,7 +14,7 @@ function App() {
   const [currentView, setCurrentView] = useState<View>('mealplan');
   const [mealPlans, setMealPlans] = useState<MealPlan[]>(mealPlansData);
   const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>(shoppingListData);
-  const [offers, setOffers] = useState<Offer[]>(offersData);
+  const [_offers] = useState<Offer[]>(offersData);
   const [savedPlans, setSavedPlans] = useState<SavedPlan[]>(savedPlansData);
   const [showSettings, setShowSettings] = useState(false);
   const [showGenerate, setShowGenerate] = useState(false);
@@ -126,7 +126,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Header */}
       <header className="top-nav">
         <div className="top-nav-brand">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
@@ -148,7 +147,6 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main style={{ flex: 1, padding: 'var(--spacing-lg)' }}>
         {currentView === 'mealplan' && (
           <MealPlanView
@@ -170,7 +168,7 @@ function App() {
         )}
 
         {currentView === 'offers' && (
-          <OffersCarousel offers={offers} />
+          <OffersCarousel offers={_offers} />
         )}
 
         {currentView === 'saved' && (
@@ -187,7 +185,6 @@ function App() {
         )}
       </main>
 
-      {/* Bottom Navigation */}
       <nav className="bottom-nav">
         {navItems.map((item) => (
           <a
@@ -205,7 +202,6 @@ function App() {
         ))}
       </nav>
 
-      {/* Modals */}
       {showSettings && (
         <SettingsModal
           userProfile={userProfile}
